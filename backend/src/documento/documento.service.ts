@@ -97,12 +97,14 @@ export class DocumentoService {
   return this.findAll();
   }
 
-findByArchivoId(id: number) {
-  return this.documentoRepository
-    .createQueryBuilder("documento")
-    .innerJoinAndSelect("documento.archivo", "archivo")
-    .where("archivo.id = :id", { id })
-    .getMany();
-}
+  async findByArchivoId(id: number) {
+    await this.documentoRepository
+      .createQueryBuilder("documento")
+      .innerJoinAndSelect("documento.archivo", "archivo")
+      .where("archivo.id = :id", { id })
+      .getMany();
+
+    return this.findAll();
+  }
 
 }
